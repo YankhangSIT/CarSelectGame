@@ -33,6 +33,7 @@ void Car_Level_Init()
 
 void Car_Level_Update()
 {
+	//doesnt work?
 	CP_Settings_Fill(redCar.Color);
 	CP_Graphics_DrawCircle(redCar.Pos.x, redCar.Pos.y, 50.0f);
 
