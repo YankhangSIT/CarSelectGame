@@ -43,6 +43,7 @@ void Main_Menu_Update()
 	if (CP_Input_MouseClicked()) {
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
+			printf("going to car_level\n"); //see if i can go to car_level
 			CP_Engine_SetNextGameState(Car_Level_Init, Car_Level_Update, Car_Level_Exit);
 		} 
 		//else if click "Exit" button
