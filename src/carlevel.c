@@ -83,7 +83,6 @@ void Car_Level_Update()
 		blueCar.Direction);
 
 	//check for isCircleClicked
-
 	if (CP_Input_MouseClicked()) {
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (IsCircleClicked(redCar.Pos.x, redCar.Pos.y, 70, mouseClickPos.x, mouseClickPos.y) == 1) {
@@ -103,6 +102,35 @@ void Car_Level_Update()
 			greenCar.Selected = 0;
 			blueCar.Selected = 1;
 			printf("bluecar selected\n");
+		}
+	}
+
+	// if car is selected, A and D will turn it.
+	if (redCar.Selected == 1) {
+		if (CP_Input_KeyDown(KEY_A)) {
+			redCar.Direction -= 1.f;
+		}
+		else if (CP_Input_KeyDown(KEY_D)) {
+			redCar.Direction += 1.f;
+		}
+		else if (CP_Input_KeyDown(KEY_W)) {
+			redCar.Pos.x += 10;
+		}
+	}
+	else if (greenCar.Selected == 1) {
+		if (CP_Input_KeyDown(KEY_A)) {
+			greenCar.Direction -= 1.f;
+		}
+		else if (CP_Input_KeyDown(KEY_D)) {
+			greenCar.Direction += 1.f;
+		}
+	}
+	else if (blueCar.Selected == 1) {
+		if (CP_Input_KeyDown(KEY_A)) {
+			blueCar.Direction -= 1.f;
+		}
+		else if (CP_Input_KeyDown(KEY_D)) {
+			blueCar.Direction += 1.f;
 		}
 	}
 

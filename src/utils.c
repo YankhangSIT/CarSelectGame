@@ -35,7 +35,13 @@ int IsCircleClicked(float circle_center_x, float circle_center_y, float diameter
 
 CP_Vector AngleToVector(float radian_angle)
 {
-    // TODO 
-    CP_Vector ret;
+	float xValue = cos(radian_angle);
+	float yValue = sin(radian_angle);
+	CP_Vector ret = CP_Vector_Set(xValue, yValue);
     return ret;
+}
+
+CP_Vector moveCar(CP_Vector position, CP_Vector direction, float speed)
+{
+
 }
