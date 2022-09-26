@@ -13,14 +13,16 @@ struct Car {
 	float Direction;
 };
 
-float speed = 200.0;
-
-int carArray[3];
+float speed = 350.0;
 
 struct Car redCar, greenCar, blueCar;
 
+struct Car cars[3];
+
+
 void Car_Level_Init()
 {
+
 	//Set window width and height to variables
 	float wWidth = CP_System_GetWindowWidth();
 	float wHeight = CP_System_GetWindowHeight();
@@ -29,6 +31,22 @@ void Car_Level_Init()
 	CP_System_SetWindowSize(wWidth, wHeight);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 
+	cars[0].Pos = CP_Vector_Set(100.0f, 100.0f);
+	cars[0].Color = CP_Color_Create(255, 0, 0, 255);
+	cars[0].Selected = 0;
+	cars[0].Direction = 0.0f;
+
+	cars[1].Pos = CP_Vector_Set(300.0f, 100.0f);
+	cars[1].Color = CP_Color_Create(0, 255, 0, 255);
+	cars[1].Selected = 0;
+	cars[1].Direction = 0.0f;
+
+	cars[2].Pos = CP_Vector_Set(200.0f, 200.0f);
+	cars[2].Color = CP_Color_Create(0, 0, 255, 255);
+	cars[2].Selected = 0;
+	cars[2].Direction = 0.0f;
+
+	/*
 	redCar.Pos = CP_Vector_Set(100.0f, 100.0f);
 	redCar.Color = CP_Color_Create(255, 0, 0, 255);
 	redCar.Selected = 0;
@@ -44,9 +62,7 @@ void Car_Level_Init()
 	blueCar.Selected = 0;
 	blueCar.Direction = 0.0f;
 
-	//carArray[0] = redCar;
-	//carArray[1] = greenCar;
-	//carArray[2] = blueCar;
+	*/
 	
 }
 
@@ -55,16 +71,32 @@ void Car_Level_Update()
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
 	//draw circles
-	CP_Settings_Fill(redCar.Color);
-	CP_Graphics_DrawCircle(redCar.Pos.x, redCar.Pos.y, 70.0f);
+	for (int i = 0; i < 3; i++) {
+		CP_Settings_Fill(cars[i].Color);
+		CP_Graphics_DrawCircle(cars[i].Pos.x, cars[i].Pos.y, 70.0f);
+	}
 
-	CP_Settings_Fill(greenCar.Color);
-	CP_Graphics_DrawCircle(greenCar.Pos.x, greenCar.Pos.y, 70.0f);
+	/*
+	CP_Settings_Fill(cars[0].Color);
+	CP_Graphics_DrawCircle(cars[0].Pos.x, cars[0].Pos.y, 70.0f);
 
-	CP_Settings_Fill(blueCar.Color);
-	CP_Graphics_DrawCircle(blueCar.Pos.x, blueCar.Pos.y, 70.0f);
+	CP_Settings_Fill(cars[1].Color);
+	CP_Graphics_DrawCircle(cars[1].Pos.x, cars[1].Pos.y, 70.0f);
+
+	CP_Settings_Fill(cars[2].Color);
+	CP_Graphics_DrawCircle(cars[2].Pos.x, cars[2].Pos.y, 70.0f);
+	*/
 
 	// draw triangles
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	for (int i = 0; i < 3; i++) {
+		CP_Graphics_DrawTriangleAdvanced(cars[i].Pos.x + 35.0f, cars[i].Pos.y,
+			cars[i].Pos.x - 20.0f, cars[i].Pos.y + 25.0f,
+			cars[i].Pos.x - 20.0f, cars[i].Pos.y - 25.0f,
+			cars[i].Direction);
+	}
+
+	/*
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 	CP_Graphics_DrawTriangleAdvanced(redCar.Pos.x + 35.0f, redCar.Pos.y,
 		redCar.Pos.x - 20.0f, redCar.Pos.y + 25.0f,
@@ -80,6 +112,7 @@ void Car_Level_Update()
 		blueCar.Pos.x - 20.0f, blueCar.Pos.y + 25.0f,
 		blueCar.Pos.x - 20.0f, blueCar.Pos.y - 25.0f,
 		blueCar.Direction);
+	*/
 
 	//check for isCircleClicked
 	if (CP_Input_MouseClicked()) {
