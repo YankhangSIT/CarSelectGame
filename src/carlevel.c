@@ -120,24 +120,13 @@ void Car_Level_Update()
 	//check for isCircleClicked
 	if (CP_Input_MouseClicked()) {
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-		if (IsCircleClicked(cars[0].Pos.x, cars[0].Pos.y, 70, mouseClickPos.x, mouseClickPos.y) == 1) {
-			i = 0;
-			/*cars[0].Selected = 1;
-			cars[1].Selected = 0;
-			cars[2].Selected = 0;*/
-		}
-		else if (IsCircleClicked(cars[1].Pos.x, cars[1].Pos.y, 70, mouseClickPos.x, mouseClickPos.y) == 1) {
-			i = 1;
-			/*cars[0].Selected = 0;
-			cars[1].Selected = 1;
-			cars[2].Selected = 0;*/
-		}
-		else if (IsCircleClicked(cars[2].Pos.x, cars[2].Pos.y, 70, mouseClickPos.x, mouseClickPos.y) == 1) {
-			i = 2;
-			/*cars[0].Selected = 0;
-			cars[1].Selected = 0;
-			cars[2].Selected = 1;*/
-		}
+		for (int counter = 0; counter < 3; counter++)
+			if (IsCircleClicked(cars[counter].Pos.x, cars[counter].Pos.y, 70, mouseClickPos.x, mouseClickPos.y) == 1) {
+				i = counter;
+				/*cars[0].Selected = 1;
+				cars[1].Selected = 0;
+				cars[2].Selected = 0;*/
+			}
 	}
 
 	/*
