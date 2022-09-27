@@ -15,9 +15,11 @@ struct Car {
 
 float speed = 350.0;
 
-struct Car redCar, greenCar, blueCar;
+//struct Car redCar, greenCar, blueCar, selectedCar;
 
 struct Car cars[3];
+
+int i;
 
 
 void Car_Level_Init()
@@ -114,11 +116,35 @@ void Car_Level_Update()
 		blueCar.Direction);
 	*/
 
+
 	//check for isCircleClicked
 	if (CP_Input_MouseClicked()) {
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-		if (IsCircleClicked(redCar.Pos.x, redCar.Pos.y, 70, mouseClickPos.x, mouseClickPos.y) == 1) {
-			redCar.Selected = 1;
+		if (IsCircleClicked(cars[0].Pos.x, cars[0].Pos.y, 70, mouseClickPos.x, mouseClickPos.y) == 1) {
+			i = 0;
+			/*cars[0].Selected = 1;
+			cars[1].Selected = 0;
+			cars[2].Selected = 0;*/
+		}
+		else if (IsCircleClicked(cars[1].Pos.x, cars[1].Pos.y, 70, mouseClickPos.x, mouseClickPos.y) == 1) {
+			i = 1;
+			/*cars[0].Selected = 0;
+			cars[1].Selected = 1;
+			cars[2].Selected = 0;*/
+		}
+		else if (IsCircleClicked(cars[2].Pos.x, cars[2].Pos.y, 70, mouseClickPos.x, mouseClickPos.y) == 1) {
+			i = 2;
+			/*cars[0].Selected = 0;
+			cars[1].Selected = 0;
+			cars[2].Selected = 1;*/
+		}
+	}
+
+	/*
+	if (CP_Input_MouseClicked()) {
+		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+		if (IsCircleClicked(cars[0].Pos.x, cars[0].Pos.y, 70, mouseClickPos.x, mouseClickPos.y) == 1) {
+			cars[0].Selected = 1;
 			greenCar.Selected = 0;
 			blueCar.Selected = 0;
 			//printf("redcar selected\n");
@@ -136,24 +162,57 @@ void Car_Level_Update()
 			//printf("bluecar selected\n");
 		}
 	}
+	*/
+
 
 	// if car is selected, A and D will turn it.
-	if (redCar.Selected == 1) {
+	float dtSpeed = speed * CP_System_GetDt(); //x units per second
+	CP_Vector direction = AngleToVector(cars[i].Direction * (PI / 180.0));
+	CP_Vector norm = CP_Vector_Normalize(direction);
+
+	if (CP_Input_KeyDown(KEY_A)) {
+		if (cars[i].Direction > 0) {
+			cars[i].Direction -= 1.f;
+		}
+		else {
+			cars[i].Direction = 359;
+		}
+		//printf("redcar angle is: %f\n", redCar.Direction);
+	}
+	else if (CP_Input_KeyDown(KEY_D)) {
+		if (cars[i].Direction < 359) {
+			cars[i].Direction += 1.f;
+		}
+		else {
+			cars[i].Direction = 0;
+		}
+	}
+
+	if (CP_Input_KeyDown(KEY_W)) {
+		cars[i].Pos = CP_Vector_Add(cars[i].Pos, CP_Vector_Scale(norm, dtSpeed));
+	}
+	else if (CP_Input_KeyDown(KEY_S)) {
+		cars[i].Pos = CP_Vector_Subtract(cars[i].Pos, CP_Vector_Scale(norm, dtSpeed));
+	}
+
+
+	/*
+	if (cars[0].Selected == 1) {
 		if (CP_Input_KeyDown(KEY_A)) {
-			if (redCar.Direction > 0) {
-				redCar.Direction -= 1.f;
+			if (cars[0].Direction > 0) {
+				cars[0].Direction -= 1.f;
 			}
 			else {
-				redCar.Direction = 359;
+				cars[0].Direction = 359;
 			}
 			//printf("redcar angle is: %f\n", redCar.Direction);
 		}
 		else if (CP_Input_KeyDown(KEY_D)) {
-			if (redCar.Direction < 359) {
-				redCar.Direction += 1.f;
+			if (cars[0].Direction < 359) {
+				cars[0].Direction += 1.f;
 			}
 			else {
-				redCar.Direction = 0;
+				cars[0].Direction = 0;
 			}
 			//printf("redcar angle is: %f\n", redCar.Direction);
 		}
@@ -236,6 +295,7 @@ void Car_Level_Update()
 			blueCar.Pos = CP_Vector_Subtract(blueCar.Pos, CP_Vector_Scale(norm, dtSpeed));
 		}
 	}
+	*/
 }
 
 void Car_Level_Exit()
